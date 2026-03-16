@@ -64,46 +64,48 @@ st.markdown(
 
 mean_arr = compute_mean_image(tuple(image_paths))
 
-controls_col, map_col, ref_col = st.columns([1, 3, 1])
-
-with controls_col:
-    cmap = st.selectbox(
-        "Colormap",
-        ["turbo", "viridis", "Blues", "plasma", "RdYlBu_r"],
-        key="mean_cmap",
-    )
+cmap = st.selectbox(
+    "Colormap",
+    ["turbo", "viridis", "Blues", "plasma", "RdYlBu_r"],
+    key="mean_cmap",
+)
 
 #correct the red channel 
 red_channel = mean_arr[:, :, 0]
 red_channel_corrected = 255 - red_channel
 
-with map_col:
-    fig_mean = px.imshow(
-        red_channel_corrected,
-        color_continuous_scale=cmap,
-        labels={"color": "Mean intensity"},
-        title="Mean Rainfall Intensity (n=2000)",
-        aspect="equal",
-    )
-    fig_mean.update_layout(height=460, margin=dict(l=0, r=0, t=40, b=0))
-    st.plotly_chart(fig_mean, use_container_width=True)
+fig_mean = px.imshow(
+    red_channel_corrected,
+    color_continuous_scale=cmap,
+    labels={"color": "Mean intensity"},
+    title="Mean Rainfall Intensity (n=2000)",
+    aspect="equal",
+)
+fig_mean.update_layout(
+    height=520,
+    margin=dict(l=0, r=0, t=40, b=0),
+    coloraxis_colorbar=dict(
+        title="Mean intensity",
+        thickness=12,
+        len=0.82,
+    ),
+)
+st.plotly_chart(fig_mean, use_container_width=True)
 
 
 
 # composite graph
-_, composite_col, _ = st.columns([1, 3, 1])
-with composite_col:
-    fig_composite = px.imshow(
-        mean_arr,
-        title="Mean RGB Composite (n=2000)",
-        aspect="equal",
-    )
-    fig_composite.update_layout(
-        height=460,
-        margin=dict(l=0, r=0, t=40, b=0),
-        coloraxis_showscale=False,
-    )
-    st.plotly_chart(fig_composite, use_container_width=True)
+fig_composite = px.imshow(
+    mean_arr,
+    title="Mean RGB Composite (n=2000)",
+    aspect="equal",
+)
+fig_composite.update_layout(
+    height=520,
+    margin=dict(l=0, r=0, t=40, b=0),
+    coloraxis_showscale=False,
+)
+st.plotly_chart(fig_composite, use_container_width=True)
 
 st.divider()
 st.caption(
