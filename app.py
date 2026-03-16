@@ -10,7 +10,7 @@ from PIL import Image
 #page config 
 st.set_page_config(
     page_title="World Rainfall Dashboard",
-    page_icon="🌧️",
+    page_icon="☔️",
     layout="wide",
 )
 
@@ -52,7 +52,7 @@ st.title("Global Rainfall Distribution")
 st.markdown("""
 Data source: [NASA World Rainfall Dataset](https://www.kaggle.com/datasets/darsh22blc1378/world-rainfall-dataset)
 
-Visualised with Streamlit & Plotly
+Visualised with Streamlit and Plotly
 
 """)
 
@@ -107,5 +107,5 @@ with composite_col:
 
 st.divider()
 st.caption(
-    "Weather and Climate, Group 2"
+    "COR2252 Weather and Climate, Group 2"
 )
