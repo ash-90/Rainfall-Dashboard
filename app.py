@@ -83,11 +83,15 @@ fig_mean = px.imshow(
 )
 fig_mean.update_layout(
     height=520,
-    margin=dict(l=0, r=0, t=40, b=0),
+    margin=dict(l=0, r=0, t=40, b=90),
     coloraxis_colorbar=dict(
         title="Mean intensity",
-        thickness=12,
-        len=0.82,
+        orientation="h",
+        x=0.5,
+        xanchor="center",
+        y=-0.22,
+        len=0.75,
+        thickness=14,
     ),
 )
 st.plotly_chart(fig_mean, use_container_width=True)
