@@ -64,6 +64,10 @@ st.markdown(
 
 mean_arr = compute_mean_image(tuple(image_paths))
 
+img_height, img_width = mean_arr.shape[:2]
+longitudes = -180 + (np.arange(img_width) + 0.5) * (360 / img_width)
+latitudes = -90 + (np.arange(img_height) + 0.5) * (180 / img_height)
+
 cmap = st.selectbox(
     "Colormap",
     ["turbo", "viridis", "Blues", "plasma", "RdYlBu_r"],
@@ -77,13 +81,17 @@ red_channel_corrected = 255 - red_channel
 fig_mean = px.imshow(
     red_channel_corrected,
     color_continuous_scale=cmap,
-    labels={"color": "Mean intensity"},
+    labels={"color": "Mean intensity", "x": "Longitude", "y": "Latitude"},
     title="Mean Rainfall Intensity (n=2000)",
     aspect="equal",
+    x=longitudes,
+    y=latitudes,
 )
 fig_mean.update_layout(
     height=520,
     margin=dict(l=0, r=0, t=40, b=90),
+    xaxis_title="Longitude",
+    yaxis_title="Latitude",
     coloraxis_colorbar=dict(
         title="Mean intensity",
         orientation="h",
@@ -103,11 +111,16 @@ fig_composite = px.imshow(
     mean_arr,
     title="Mean RGB Composite (n=2000)",
     aspect="equal",
+    x=longitudes,
+    y=latitudes,
+    labels={"x": "Longitude", "y": "Latitude"},
 )
 fig_composite.update_layout(
     height=520,
     margin=dict(l=0, r=0, t=40, b=0),
     coloraxis_showscale=False,
+    xaxis_title="Longitude",
+    yaxis_title="Latitude",
 )
 st.plotly_chart(fig_composite, use_container_width=True)
 
